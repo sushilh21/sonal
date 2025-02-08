@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Propose Day</title>
-  
-  <!-- Ensure proper scaling on mobile devices -->
+
+  <!-- Make it responsive on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Optional Google Font -->
@@ -38,10 +38,10 @@
       position: relative;
       width: 100%;
       max-width: 900px;
-      min-height: 100vh; /* so it can expand on mobile if needed */
+      min-height: 100vh; /* can expand on mobile if needed */
       background: 
         linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-        url('propose.jpg'); /* Your own background image */
+        url('propose.jpg'); /* Your own background image file */
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -87,7 +87,6 @@
       margin-top: 40px;
       font-size: 3rem;
       display: none; /* hidden initially */
-      transition: opacity 0.5s ease;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
     }
 
@@ -115,8 +114,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 300px;
-      height: 150px;
+      /* 
+         Width is exactly 240px so two 120px images
+         fit side by side with no gap in the middle.
+         If you want them to overlap slightly, reduce this (e.g., 220px). 
+      */
+      width: 240px; 
+      height: 120px;
       transform: translate(-50%, -50%);
       display: none; /* shown when button is clicked */
     }
@@ -125,14 +129,16 @@
       width: 120px;
       height: auto;
     }
-    /* Left image moves from left to center */
+
+    /* Left image: starts offscreen to the left and slides in */
     #leftLovey {
-      left: 0;
+      left: 0; /* at container's left edge */
       animation: kissLeft 3s forwards;
     }
     @keyframes kissLeft {
       0% {
-        transform: translateX(-150%);
+        /* Start far off to the left (-300% of its own width) */
+        transform: translateX(-300%);
         opacity: 0;
       }
       50% {
@@ -143,14 +149,16 @@
         opacity: 1;
       }
     }
-    /* Right image moves from right to center */
+
+    /* Right image: starts offscreen to the right and slides in */
     #rightLovey {
-      right: 0;
+      right: 0; /* at container's right edge */
       animation: kissRight 3s forwards;
     }
     @keyframes kissRight {
       0% {
-        transform: translateX(150%);
+        /* Start far off to the right (+300% of its own width) */
+        transform: translateX(300%);
         opacity: 0;
       }
       50% {
@@ -178,7 +186,7 @@
         font-size: 2.2rem;
       }
       .kissing-container {
-        width: 220px;
+        width: 200px; /* You can reduce this for smaller screens if you want */
         height: 100px;
       }
       .kissing-container img {
@@ -201,7 +209,7 @@
         font-size: 1.8rem;
       }
       .kissing-container {
-        width: 200px;
+        width: 180px;
         height: 80px;
       }
       .kissing-container img {
@@ -213,12 +221,9 @@
 <body>
 
   <!-- Background Music/Video (MP4) -->
+  <!-- If you're just using it as audio, sometimes MP4 may not work in all browsers. 
+       You might need an MP3 or use <video> with style="display: none;" to hide it. -->
   <audio id="backgroundMusic" src="propose.mp4" loop></audio>
-  <!-- 
-    If audio playback is an issue in certain browsers (MP4 might not always be recognized as audio):
-    1) Convert your audio to MP3, or
-    2) Use a <video> tag with "style=display:none;" to hide the player. 
-  -->
 
   <div class="container">
     <h1>Happy Propose Day</h1>
@@ -231,18 +236,18 @@
     <!-- Final proposal message -->
     <div class="final-message" id="finalMessage">Will You Marry Me?</div>
 
-    <!-- Container for your custom "left" and "right" images -->
+    <!-- Container for your custom left and right images -->
     <div class="kissing-container" id="kissingContainer">
       <!-- Left image -->
       <img 
         id="leftLovey" 
-        src="left.jpg"  <!-- Replace with your own file name -->
+        src="left.jpg" <!-- Make sure left.jpg is in the same folder -->
         alt="Left Teddy/Character"
       />
       <!-- Right image -->
       <img 
         id="rightLovey"
-        src="right.jpg" <!-- Replace with your own file name -->
+        src="right.jpg" <!-- Make sure right.jpg is in the same folder -->
         alt="Right Teddy/Character"
       />
     </div>
@@ -265,7 +270,6 @@
       heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
       // Random animation duration
       heart.style.animationDuration = (5 + Math.random() * 3) + 's';
-
       document.body.appendChild(heart);
 
       // Remove from DOM after flying
@@ -273,7 +277,7 @@
     }
 
     openBoxBtn.addEventListener('click', () => {
-      // Play background audio/video (requires user interaction in modern browsers)
+      // Play background audio/video (requires user interaction)
       backgroundMusic.play().catch(err => {
         console.error('Audio/Video playback failed:', err);
       });
@@ -286,7 +290,7 @@
 
       // Start heart shower
       const heartInterval = setInterval(createHeart, 300);
-      // Stop creating hearts after 5 seconds (they will continue to float)
+      // Stop creating hearts after 5 seconds
       setTimeout(() => clearInterval(heartInterval), 5000);
     });
   </script>
