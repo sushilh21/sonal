@@ -89,6 +89,7 @@
       display: none; /* hidden initially */
       text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
       z-index: 1000;
+      color: #FF1E56; /* <-- Updated color here */
     }
 
     /* HEARTS ANIMATION */
@@ -222,8 +223,6 @@
 <body>
 
   <!-- Background Music/Video (MP4) -->
-  <!-- If you're just using it as audio, sometimes MP4 may not work in all browsers. 
-       You might need an MP3 or use <video> with style="display: none;" to hide it. -->
   <audio id="backgroundMusic" src="propose.mp4" loop></audio>
 
   <div class="container">
@@ -242,14 +241,12 @@
       <!-- Left image -->
       <img 
         id="leftLovey" 
-        src="left.jpg" <!-- Make sure left.jpg is in the same folder -->
-        
+        src="left.jpg"
       />
       <!-- Right image -->
       <img 
         id="rightLovey"
-        src="right.jpg" <!-- Make sure right.jpg is in the same folder -->
-        
+        src="right.jpg"
       />
     </div>
   </div>
