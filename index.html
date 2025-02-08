@@ -1,165 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Propose Day</title>
-  
-  <!-- Google Font for a romantic feel (optional) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
-  
-  <style>
-    /* RESET SOME DEFAULT STYLES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-    }
-    body {
-      font-family: 'Dancing Script', cursive;
-      background: #fef2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden; /* Hide scrolling while the hearts fly around */
-    }
-
-    /* MAIN CONTAINER */
-    .container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      height: 100vh;
-      background: linear-gradient(
-        rgba(0, 0, 0, 0.4), 
-        rgba(0, 0, 0, 0.4)
-      ), url('https://images.unsplash.com/photo-1510262217611-07a4b41e86e8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2hhZGVzJTIwY291cGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1400&q=60');
-      background-size: cover;
-      background-position: center;
-      text-align: center;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* HEADER TEXT */
-    h1 {
-      font-size: 4rem;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
-    }
-
-    p {
-      font-size: 1.4rem;
-      max-width: 600px;
-      margin: 0 auto;
-      margin-bottom: 40px;
-      line-height: 1.5;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    }
-
-    /* BUTTON */
-    .open-box-btn {
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      background-color: #ff6666;
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .open-box-btn:hover {
-      background-color: #ff3b3b;
-    }
-
-    /* FINAL MESSAGE */
-    .final-message {
-      margin-top: 40px;
-      font-size: 3rem;
-      display: none; /* hidden by default */
-      transition: opacity 0.5s ease;
-    }
-
-    /* HEARTS ANIMATION */
-    .heart {
-      position: absolute;
-      color: #ff5c5c;
-      width: 30px;
-      height: 30px;
-      font-size: 2rem;
-      animation: fly 5s linear infinite;
-    }
-
-    @keyframes fly {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Marry Me?</title>
+    <style>
+        body {
+            text-align: center;
+            background: url('https://source.unsplash.com/1600x900/?love,romantic') no-repeat center center/cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            margin-top: 20vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .no-btn {
+            background-color: #4d4dff;
+            color: white;
+            position: absolute;
+        }
+        .teddy {
+            display: none;
+            width: 200px;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 1.2rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Happy Propose Day</h1>
-    <p>
-      My love, every day with you is an adventure, a dream, and a gift. 
-      Today, I have something special to ask you...
-    </p>
-    <button class="open-box-btn">Open the Box</button>
+    <audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     
-    <div class="final-message" id="finalMessage">Will You Marry Me?</div>
-  </div>
+    <div class="container">
+        <h1>Will You Marry Me?</h1>
+        <div class="buttons">
+            <button class="yes-btn" onclick="yesClicked()">Yes</button>
+            <button class="no-btn" onclick="moveButton(this)" onmouseover="moveButton(this)">No</button>
+        </div>
+        <img src="https://i.imgur.com/Oq1r3sF.png" alt="Blushing Teddy" class="teddy" id="teddy">
+    </div>
 
-  <script>
-    // REFERENCE TO FINAL MESSAGE
-    const finalMessage = document.getElementById('finalMessage');
-    const openBoxBtn = document.querySelector('.open-box-btn');
-
-    // FUNCTION TO CREATE HEART ELEMENTS
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.textContent = '❤';
-      // Random left position
-      heart.style.left = Math.random() * 100 + 'vw';
-      // Random size
-      const size = Math.random() * 2 + 1;
-      heart.style.fontSize = size + 'rem';
-      // Random animation duration (slightly randomizing)
-      heart.style.animationDuration = 5 + Math.random() * 3 + 's';
-      document.body.appendChild(heart);
-
-      // Remove heart from DOM after animation
-      setTimeout(() => {
-        heart.remove();
-      }, 8000);
-    }
-
-    // EVENT LISTENER FOR OPEN BOX BUTTON
-    openBoxBtn.addEventListener('click', () => {
-      // Show final message
-      finalMessage.style.display = 'block';
-
-      // Start an interval to continuously create hearts
-      const heartInterval = setInterval(createHeart, 300);
-
-      // Optional: stop creating hearts after a certain time
-      setTimeout(() => {
-        clearInterval(heartInterval);
-      }, 5000);
-    });
-  </script>
+    <script>
+        function yesClicked() {
+            alert("Yay! You said YES! 💖💍");
+            document.getElementById("teddy").style.display = "block";
+        }
+        function moveButton(btn) {
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 150);
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+        }
+    </script>
 </body>
 </html>
