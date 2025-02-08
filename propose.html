@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Propose Day</title>
+
+  <!-- Google Font (optional) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" 
+    rel="stylesheet"
+  />
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Dancing Script', cursive;
+      background: #fef2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Hide scroll so hearts can float around freely */
+    }
+
+    /* CONTAINER / HERO SECTION */
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 100vh;
+      background: 
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+        url('https://images.unsplash.com/photo-1510262217611-07a4b41e86e8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2hhZGVzJTIwY291cGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1400&q=60');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+    p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* BUTTON */
+    .open-box-btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #ff6666;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .open-box-btn:hover {
+      background-color: #ff3b3b;
+    }
+
+    /* FINAL MESSAGE */
+    .final-message {
+      margin-top: 40px;
+      font-size: 3rem;
+      display: none; /* initially hidden */
+      transition: opacity 0.5s ease;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* HEARTS ANIMATION */
+    .heart {
+      position: absolute;
+      color: #ff5c5c;
+      width: 30px;
+      height: 30px;
+      font-size: 2rem;
+      animation: fly 5s linear infinite;
+      z-index: 999; /* ensure hearts float on top */
+    }
+    @keyframes fly {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* TEDDY / LOVE BIRD ANIMATION */
+    .kissing-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 150px;
+      transform: translate(-50%, -50%);
+      display: none; /* shown when button is clicked */
+    }
+    .kissing-container img {
+      position: absolute;
+      width: 120px;
+      height: auto;
+    }
+    /* Left teddy moves from left to center */
+    #leftLovey {
+      left: 0;
+      animation: kissLeft 3s forwards;
+    }
+    @keyframes kissLeft {
+      0% {
+        transform: translateX(-150%);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    /* Right teddy moves from right to center */
+    #rightLovey {
+      right: 0;
+      animation: kissRight 3s forwards;
+    }
+    @keyframes kissRight {
+      0% {
+        transform: translateX(150%);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Background Music (replace 'YOUR_BOLLYWOOD_SONG_URL.mp3' with your actual file/link) -->
+  <audio id="backgroundMusic" src="YOUR_BOLLYWOOD_SONG_URL.mp3" loop></audio>
+
+  <div class="container">
+    <h1>Happy Propose Day</h1>
+    <p>
+      From the moment I met you, life has been more beautiful than any Bollywood dream.
+      Today, I have one important question for you...
+    </p>
+    <button class="open-box-btn">Open the Box</button>
+
+    <!-- Final proposal message -->
+    <div class="final-message" id="finalMessage">Will You Marry Me?</div>
+
+    <!-- Container for kissing images (teddy bears or love birds) -->
+    <div class="kissing-container" id="kissingContainer">
+      <!-- Left image: Teddy Bear -->
+      <img 
+        id="leftLovey" 
+        src="https://cdn.pixabay.com/photo/2016/02/19/10/21/teddy-bears-1208259_1280.jpg"
+        alt="Left Teddy"
+      />
+      <!-- Right image: Teddy Bear -->
+      <img 
+        id="rightLovey"
+        src="https://cdn.pixabay.com/photo/2016/03/09/09/17/teddy-1245878_1280.jpg"
+        alt="Right Teddy"
+      />
+    </div>
+  </div>
+
+  <script>
+    const finalMessage = document.getElementById('finalMessage');
+    const openBoxBtn = document.querySelector('.open-box-btn');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const kissingContainer = document.getElementById('kissingContainer');
+
+    // Create hearts continuously
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = Math.random() * 2 + 1 + 'rem';
+      heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    openBoxBtn.addEventListener('click', () => {
+      // Play background music (requires user interaction)
+      backgroundMusic.play().catch(err => {
+        console.error('Audio playback failed:', err);
+      });
+
+      // Show final proposal message
+      finalMessage.style.display = 'block';
+
+      // Show kissing images
+      kissingContainer.style.display = 'block';
+
+      // Start heart shower
+      const heartInterval = setInterval(createHeart, 300);
+      // Stop creating hearts after 5s (they will continue to float for a bit)
+      setTimeout(() => clearInterval(heartInterval), 5000);
+    });
+  </script>
+</body>
+</html>
