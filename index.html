@@ -117,9 +117,9 @@
       /* 
          Width is exactly 240px so two 120px images
          fit side by side with no gap in the middle.
-         If you want them to overlap slightly, reduce this (e.g., 220px). 
+         If you want them to overlap slightly, reduce (e.g., 220px). 
       */
-      width: 240px; 
+      width: 240px;
       height: 120px;
       transform: translate(-50%, -50%);
       display: none; /* shown when button is clicked */
@@ -220,20 +220,19 @@
 </head>
 <body>
 
-  <!-- Background Music/Video (MP4) -->
-  <!-- If you're just using it as audio, sometimes MP4 may not work in all browsers. 
-       You might need an MP3 or use <video> with style="display: none;" to hide it. -->
-  <audio id="backgroundMusic" src="propose.mp4" loop></audio>
+  <!-- Use MP3 for broad audio support -->
+  <audio id="backgroundMusic" src="propose.mp3" loop></audio>
 
   <div class="container">
     <h1>Happy Propose Day</h1>
     <p>
       From the moment I met you, life has been more beautiful than any Bollywood dream.
       Today, I have one important question for you...
-      <!-- Final proposal message -->
-    <div class="final-message" id="finalMessage">Will You Marry Me?</div>
     </p>
-    <button class="open-box-btn">YESSSS!!!</button>
+    <button class="open-box-btn">Open the Box</button>
+
+    <!-- Final proposal message -->
+    <div class="final-message" id="finalMessage">Will You Marry Me?</div>
 
     <!-- Container for your custom left and right images -->
     <div class="kissing-container" id="kissingContainer">
@@ -276,15 +275,15 @@
     }
 
     openBoxBtn.addEventListener('click', () => {
-      // Play background audio/video (requires user interaction)
+      // Play background audio (requires user interaction in modern browsers)
       backgroundMusic.play().catch(err => {
-        console.error('Audio/Video playback failed:', err);
+        console.error('Audio playback failed:', err);
       });
 
       // Show final proposal message
       finalMessage.style.display = 'block';
 
-      // Show kissing images
+      // Show the kissing-container
       kissingContainer.style.display = 'block';
 
       // Start heart shower
