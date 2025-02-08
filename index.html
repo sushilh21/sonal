@@ -1,92 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Marry Me?</title>
-    <style>
-        body {
-            text-align: center;
-            background: url('https://source.unsplash.com/1600x900/?love,romantic') no-repeat center center/cover;
-            color: white;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        .container {
-            margin-top: 20vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 {
-            font-size: 3rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        .buttons {
-            margin-top: 20px;
-            position: relative;
-            display: flex;
-            gap: 20px;
-        }
-        button {
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-        .yes-btn {
-            background-color: #ff4d4d;
-            color: white;
-        }
-        .no-btn {
-            background-color: #4d4dff;
-            color: white;
-            position: absolute;
-        }
-        .teddy {
-            display: none;
-            width: 200px;
-            margin-top: 20px;
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            button {
-                font-size: 1.2rem;
-                padding: 8px 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Propose Day</title>
+  
+  <!-- Ensure proper scaling on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Optional Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" 
+    rel="stylesheet"
+  />
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Dancing Script', cursive;
+      background: #fef2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* CONTAINER / HERO SECTION */
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      min-height: 100vh; /* so it can expand on mobile if needed */
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url('propose.jpg'); /* Your own background image */
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+    p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* BUTTON */
+    .open-box-btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #ff6666;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .open-box-btn:hover {
+      background-color: #ff3b3b;
+    }
+
+    /* FINAL MESSAGE */
+    .final-message {
+      margin-top: 40px;
+      font-size: 3rem;
+      display: none; /* hidden initially */
+      transition: opacity 0.5s ease;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* HEARTS ANIMATION */
+    .heart {
+      position: absolute;
+      color: #ff5c5c;
+      font-size: 2rem;
+      animation: fly 5s linear infinite;
+      z-index: 999; /* ensure hearts float on top */
+    }
+    @keyframes fly {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* KISSING IMAGES CONTAINER */
+    .kissing-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 150px;
+      transform: translate(-50%, -50%);
+      display: none; /* shown when button is clicked */
+    }
+    .kissing-container img {
+      position: absolute;
+      width: 120px;
+      height: auto;
+    }
+    /* Left image moves from left to center */
+    #leftLovey {
+      left: 0;
+      animation: kissLeft 3s forwards;
+    }
+    @keyframes kissLeft {
+      0% {
+        transform: translateX(-150%);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    /* Right image moves from right to center */
+    #rightLovey {
+      right: 0;
+      animation: kissRight 3s forwards;
+    }
+    @keyframes kissRight {
+      0% {
+        transform: translateX(150%);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* MEDIA QUERIES FOR MOBILE */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      .open-box-btn {
+        font-size: 1rem;
+        padding: 12px 24px;
+      }
+      .final-message {
+        font-size: 2.2rem;
+      }
+      .kissing-container {
+        width: 220px;
+        height: 100px;
+      }
+      .kissing-container img {
+        width: 100px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+      .open-box-btn {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+      }
+      .final-message {
+        font-size: 1.8rem;
+      }
+      .kissing-container {
+        width: 200px;
+        height: 80px;
+      }
+      .kissing-container img {
+        width: 80px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <audio autoplay loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
-    <div class="container">
-        <h1>Will You Marry Me?</h1>
-        <div class="buttons">
-            <button class="yes-btn" onclick="yesClicked()">Yes</button>
-            <button class="no-btn" onclick="moveButton(this)" onmouseover="moveButton(this)">No</button>
-        </div>
-        <img src="https://i.imgur.com/Oq1r3sF.png" alt="Blushing Teddy" class="teddy" id="teddy">
-    </div>
 
-    <script>
-        function yesClicked() {
-            alert("Yay! You said YES! 💖💍");
-            document.getElementById("teddy").style.display = "block";
-        }
-        function moveButton(btn) {
-            let x = Math.random() * (window.innerWidth - 150);
-            let y = Math.random() * (window.innerHeight - 150);
-            btn.style.left = `${x}px`;
-            btn.style.top = `${y}px`;
-        }
-    </script>
+  <!-- Background Music/Video (MP4) -->
+  <audio id="backgroundMusic" src="propose.mp4" loop></audio>
+  <!-- 
+    If audio playback is an issue in certain browsers (MP4 might not always be recognized as audio):
+    1) Convert your audio to MP3, or
+    2) Use a <video> tag with "style=display:none;" to hide the player. 
+  -->
+
+  <div class="container">
+    <h1>Happy Propose Day</h1>
+    <p>
+      From the moment I met you, life has been more beautiful than any Bollywood dream.
+      Today, I have one important question for you...
+    </p>
+    <button class="open-box-btn">Open the Box</button>
+
+    <!-- Final proposal message -->
+    <div class="final-message" id="finalMessage">Will You Marry Me?</div>
+
+    <!-- Container for your custom "left" and "right" images -->
+    <div class="kissing-container" id="kissingContainer">
+      <!-- Left image -->
+      <img 
+        id="leftLovey" 
+        src="left.jpg"  <!-- Replace with your own file name -->
+        alt="Left Teddy/Character"
+      />
+      <!-- Right image -->
+      <img 
+        id="rightLovey"
+        src="right.jpg" <!-- Replace with your own file name -->
+        alt="Right Teddy/Character"
+      />
+    </div>
+  </div>
+
+  <script>
+    const finalMessage = document.getElementById('finalMessage');
+    const openBoxBtn = document.querySelector('.open-box-btn');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const kissingContainer = document.getElementById('kissingContainer');
+
+    // Function to create floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤';
+      // Random horizontal position
+      heart.style.left = Math.random() * 100 + 'vw';
+      // Random size
+      heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+      // Random animation duration
+      heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+
+      document.body.appendChild(heart);
+
+      // Remove from DOM after flying
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    openBoxBtn.addEventListener('click', () => {
+      // Play background audio/video (requires user interaction in modern browsers)
+      backgroundMusic.play().catch(err => {
+        console.error('Audio/Video playback failed:', err);
+      });
+
+      // Show final proposal message
+      finalMessage.style.display = 'block';
+
+      // Show kissing images
+      kissingContainer.style.display = 'block';
+
+      // Start heart shower
+      const heartInterval = setInterval(createHeart, 300);
+      // Stop creating hearts after 5 seconds (they will continue to float)
+      setTimeout(() => clearInterval(heartInterval), 5000);
+    });
+  </script>
 </body>
 </html>
