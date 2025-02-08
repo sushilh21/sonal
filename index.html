@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <title>Propose Day</title>
 
-  <!-- Google Font (optional) -->
+  <!-- Make it responsive on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Optional Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link 
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" 
@@ -28,7 +31,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden; /* Hide scroll so hearts can float around freely */
     }
 
     /* CONTAINER / HERO SECTION */
@@ -36,10 +38,10 @@
       position: relative;
       width: 100%;
       max-width: 900px;
-      height: 100vh;
+      min-height: 100vh; /* can expand on mobile if needed */
       background: 
-        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-        url('https://images.unsplash.com/photo-1510262217611-07a4b41e86e8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2hhZGVzJTIwY291cGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1400&q=60');
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url('propose.jpg'); /* Your own background image file */
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -48,7 +50,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 20px;
+      padding: 40px 20px;
     }
 
     h1 {
@@ -84,8 +86,7 @@
     .final-message {
       margin-top: 40px;
       font-size: 3rem;
-      display: none; /* initially hidden */
-      transition: opacity 0.5s ease;
+      display: none; /* hidden initially */
       text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
     }
 
@@ -93,8 +94,6 @@
     .heart {
       position: absolute;
       color: #ff5c5c;
-      width: 30px;
-      height: 30px;
       font-size: 2rem;
       animation: fly 5s linear infinite;
       z-index: 999; /* ensure hearts float on top */
@@ -110,13 +109,18 @@
       }
     }
 
-    /* TEDDY / LOVE BIRD ANIMATION */
+    /* KISSING IMAGES CONTAINER */
     .kissing-container {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 300px;
-      height: 150px;
+      /* 
+         Width is exactly 240px so two 120px images
+         fit side by side with no gap in the middle.
+         If you want them to overlap slightly, reduce this (e.g., 220px). 
+      */
+      width: 240px; 
+      height: 120px;
       transform: translate(-50%, -50%);
       display: none; /* shown when button is clicked */
     }
@@ -125,14 +129,16 @@
       width: 120px;
       height: auto;
     }
-    /* Left teddy moves from left to center */
+
+    /* Left image: starts offscreen to the left and slides in */
     #leftLovey {
-      left: 0;
+      left: 0; /* at container's left edge */
       animation: kissLeft 3s forwards;
     }
     @keyframes kissLeft {
       0% {
-        transform: translateX(-150%);
+        /* Start far off to the left (-300% of its own width) */
+        transform: translateX(-300%);
         opacity: 0;
       }
       50% {
@@ -143,14 +149,16 @@
         opacity: 1;
       }
     }
-    /* Right teddy moves from right to center */
+
+    /* Right image: starts offscreen to the right and slides in */
     #rightLovey {
-      right: 0;
+      right: 0; /* at container's right edge */
       animation: kissRight 3s forwards;
     }
     @keyframes kissRight {
       0% {
-        transform: translateX(150%);
+        /* Start far off to the right (+300% of its own width) */
+        transform: translateX(300%);
         opacity: 0;
       }
       50% {
@@ -159,14 +167,63 @@
       100% {
         transform: translateX(0);
         opacity: 1;
+      }
+    }
+
+    /* MEDIA QUERIES FOR MOBILE */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      .open-box-btn {
+        font-size: 1rem;
+        padding: 12px 24px;
+      }
+      .final-message {
+        font-size: 2.2rem;
+      }
+      .kissing-container {
+        width: 200px; /* You can reduce this for smaller screens if you want */
+        height: 100px;
+      }
+      .kissing-container img {
+        width: 100px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+      .open-box-btn {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+      }
+      .final-message {
+        font-size: 1.8rem;
+      }
+      .kissing-container {
+        width: 180px;
+        height: 80px;
+      }
+      .kissing-container img {
+        width: 80px;
       }
     }
   </style>
 </head>
 <body>
-  
-  <!-- Background Music (replace 'YOUR_BOLLYWOOD_SONG_URL.mp3' with your actual file/link) -->
-  <audio id="backgroundMusic" src="YOUR_BOLLYWOOD_SONG_URL.mp3" loop></audio>
+
+  <!-- Background Music/Video (MP4) -->
+  <!-- If you're just using it as audio, sometimes MP4 may not work in all browsers. 
+       You might need an MP3 or use <video> with style="display: none;" to hide it. -->
+  <audio id="backgroundMusic" src="propose.mp4" loop></audio>
 
   <div class="container">
     <h1>Happy Propose Day</h1>
@@ -179,19 +236,19 @@
     <!-- Final proposal message -->
     <div class="final-message" id="finalMessage">Will You Marry Me?</div>
 
-    <!-- Container for kissing images (teddy bears or love birds) -->
+    <!-- Container for your custom left and right images -->
     <div class="kissing-container" id="kissingContainer">
       <!-- Left image -->
       <img 
         id="leftLovey" 
-        src="left.jpg" 
-        alt="Left Teddy"
+        src="left.jpg" <!-- Make sure left.jpg is in the same folder -->
+        alt="Left Teddy/Character"
       />
       <!-- Right image -->
       <img 
-        id="rightLovey" 
-        src="right.jpg"
-        alt="Right Teddy"
+        id="rightLovey"
+        src="right.jpg" <!-- Make sure right.jpg is in the same folder -->
+        alt="Right Teddy/Character"
       />
     </div>
   </div>
@@ -200,25 +257,29 @@
     const finalMessage = document.getElementById('finalMessage');
     const openBoxBtn = document.querySelector('.open-box-btn');
     const backgroundMusic = document.getElementById('backgroundMusic');
-
     const kissingContainer = document.getElementById('kissingContainer');
 
-    // Create hearts continuously
+    // Function to create floating hearts
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.textContent = '❤';
+      // Random horizontal position
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = Math.random() * 2 + 1 + 'rem';
+      // Random size
+      heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+      // Random animation duration
       heart.style.animationDuration = (5 + Math.random() * 3) + 's';
       document.body.appendChild(heart);
+
+      // Remove from DOM after flying
       setTimeout(() => heart.remove(), 8000);
     }
 
     openBoxBtn.addEventListener('click', () => {
-      // Play background music (requires user interaction)
+      // Play background audio/video (requires user interaction)
       backgroundMusic.play().catch(err => {
-        console.error('Audio playback failed:', err);
+        console.error('Audio/Video playback failed:', err);
       });
 
       // Show final proposal message
@@ -229,7 +290,7 @@
 
       // Start heart shower
       const heartInterval = setInterval(createHeart, 300);
-      // Stop creating hearts after 5s (they will continue to float for a bit)
+      // Stop creating hearts after 5 seconds
       setTimeout(() => clearInterval(heartInterval), 5000);
     });
   </script>
